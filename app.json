@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "Velora",
+    "slug": "sprint01cross",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "sdkVersion": "51.0.0",
+    "platforms": ["ios", "android", "web"]
+  }
+}

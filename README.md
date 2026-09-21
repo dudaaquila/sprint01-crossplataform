@@ -25,6 +25,10 @@ pelo nível de risco (baixo, médio, alto).
 
 `https://github.com/dudaaquila/sprint01-crossplataform` 
 
+## Link do YouTube:
+
+`https://youtu.be/LtApg3yWTog?is=0p5bgo5YwukDR1la`
+
 ---
 
 ## Como rodar o projeto

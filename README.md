@@ -47,7 +47,7 @@ npm install
 # 3. Inicie o servidor Expo
 npx expo start
 
-# 4. Abra no Expo Go (QR code) ou pressione "w" para rodar no navegador
+# 4. Pressione "w" para rodar no navegador
 ```
 
 ---

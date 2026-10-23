@@ -1,100 +1,113 @@
-# Velöra — Gestão Inteligente de Vegetação Rodoviária
+# Velöra — Gestão de Vegetação Rodoviária (Motiva)
 
-App mobile desenvolvido em React Native com Expo para operadores de campo da
-**Motiva** registrarem, consultarem e classificarem por risco ocorrências de
-vegetação excessiva ao longo das rodovias gerenciadas pela concessionária.
-
-Vegetação alta perto da pista reduz a visibilidade da sinalização e é um
-risco real de segurança viária. O Velöra permite que o operador registre a
-ocorrência em campo, pelo celular, no momento em que a encontra — sem depender
-de planilhas ou relatos informais — e que a equipe priorize o atendimento
-pelo nível de risco (baixo, médio, alto).
+App mobile feito em **React Native + Expo + TypeScript** para registrar, consultar e classificar por risco ocorrências de vegetação ao longo das rodovias da **Motiva**.
 
 ---
 
 ## Integrantes
 
-|Daniel Castro Sanches |rm563333|
-|Gabriel Rodrigues Barbosa |rm564475|
-|Guilherme Martins dos Santos |rm566570|
-|Maria Eduarda de Áquila Amaral |rm563783|
-|Matheus Cordeiro Alves |rm563107|
-|Matheus Vilela Silveira |rm563989 |
+| _Daniel Castro Sanches_ | _RM563333_ |
+| _Gabriel Rodrigues Barbosa_ | _RM566475_ |
+| _Guilherme Martins dos Santos_ | _RM566570_ |
+| _Maria Eduarda de Áquila Amaral_ | _RM563783_ |
+| _Matheus Cordeiro Alves_ | _RM563107_ |
+| _Matheus Vilela Silveira_ | _RM564989_ |  
 
-## Link do repositório
+## Links
 
-`https://github.com/dudaaquila/sprint01-crossplataform` 
-
-## Link do YouTube:
-
-`https://youtu.be/LtApg3yWTog?is=0p5bgo5YwukDR1la`
+- **Repositório:** https://github.com/dudaaquila/sprint01-crossplataform
+- **Vídeo de demonstração (YouTube, não listado):** _link_
 
 ---
 
-## Como rodar o projeto
+## O problema
 
-### Pré-requisitos
+Vegetação alta perto da pista reduz a visibilidade da sinalização e é um risco de segurança viária. Hoje, esse tipo de ocorrência costuma ser repassado por relatos informais ou planilhas, sem padrão e sem priorização.
 
-- Node.js 20+
-- App **Expo Go** no celular (ou emulador Android/iOS), ou navegador para rodar via `--web`
+- **Usuário:** operador de campo da Motiva.
+- **Ação principal:** registrar, pelo celular e no momento em que encontra, uma ocorrência de vegetação (trecho da rodovia, descrição e nível de risco) e consultá-la depois na lista.
+- **Resultado:** as ocorrências ficam padronizadas, classificadas em **baixo, médio ou alto risco** e continuam salvas no aparelho mesmo depois de fechar o app.
 
-### Passos
+---
+
+## Stack
+
+- React Native
+- Expo (SDK 51)
+- TypeScript
+- `@react-native-async-storage/async-storage` (persistência local)
+
+---
+
+## Como rodar
+
+Pré-requisito: **Node.js 20 ou superior** instalado.
 
 ```bash
-# 1. Clone o repositório
 git clone https://github.com/dudaaquila/sprint01-crossplataform.git
 cd sprint01-crossplataform
-
-# 2. Instale as dependências (inclui o AsyncStorage, novo nesta sprint)
 npm install
-
-# 3. Inicie o servidor Expo
 npx expo start
-
-# 4. Pressione "w" para rodar no navegador
 ```
+
+Com o servidor Expo rodando, escolha uma forma de abrir o app:
+
+- **Navegador (mais simples):** pressione `w` no terminal.
+- **Emulador Android / Simulador iOS:** pressione `a` ou `i` no terminal.
+- **Celular com Expo Go:** escaneie o QR code. O Expo Go precisa ser compatível com o SDK 51; se o aplicativo avisar de incompatibilidade, use o navegador ou um emulador.
+
+Se algo não carregar direito, limpe o cache com `npx expo start -c`.
 
 ---
 
-## O que o app resolve
+## Comportamento esperado
 
-O **Velöra** permite que operadores de campo da Motiva:
+1. **Abrir o app:** aparece a lista de ocorrências. Na primeira execução, a lista vem com 3 ocorrências de exemplo (uma de cada nível de risco).
+2. **Criar ocorrência:** toque em **+ Nova**, preencha o **trecho da rodovia** e a **descrição**, escolha o **risco** (baixo, médio ou alto), opcionalmente informe o operador, e toque em **Salvar ocorrência**. Os campos de trecho e descrição são obrigatórios.
+3. **Ver na lista:** o app volta para a lista e a nova ocorrência já aparece no topo, sem precisar reiniciar.
+4. **Abrir o detalhe:** toque em qualquer card para ver descrição, data/hora do registro, operador, status e risco.
+5. **Fechar e reabrir:** feche o app por completo e abra de novo (no navegador, recarregue a página). As ocorrências cadastradas continuam na lista.
 
-- **Visualizem** a lista de ocorrências registradas, com indicador visual de risco (alto, médio, baixo) em cada card;
-- **Cadastrem** novas ocorrências informando trecho da rodovia, descrição, operador responsável e nível de risco;
-- **Consultem o detalhe completo** de cada ocorrência, incluindo data/hora do registro e status;
-- **Confiem que o registro não se perde**: os dados persistem no dispositivo mesmo depois de fechar e reabrir o app.
+### Classificação de risco
+
+O nível de risco aparece como um selo colorido (`RiscoBadge`) em dois lugares: no **card da lista** e no **topo da tela de detalhe**.
+
+| Risco | Cor | Significado |
+|---|---|---|
+| Baixo | Verde | Vegetação sob controle, manutenção de rotina |
+| Médio | Amarelo | Vegetação próxima à pista, sem obstrução direta |
+| Alto | Vermelho | Vegetação invadindo acostamento/sinalização, atendimento prioritário |
 
 ---
 
-## Estrutura do projeto
+## Estrutura de pastas
 
 ```
+App.tsx                              # estado global, carga inicial e navegação entre telas
 src/
   screens/
-    OcorrenciaListScreen.tsx     # Lista de ocorrências (com estado de carregando/vazio)
-    NovaOcorrenciaScreen.tsx     # Formulário de cadastro
-    DetalheOcorrenciaScreen.tsx  # Detalhe completo de uma ocorrência
+    OcorrenciaListScreen.tsx         # lista (carregando / vazia / com cards)
+    NovaOcorrenciaScreen.tsx         # formulário de cadastro
+    DetalheOcorrenciaScreen.tsx      # detalhe de uma ocorrência
   components/
-    OcorrenciaCard.tsx           # Card reutilizável da lista
-    RiscoBadge.tsx                # Badge de nível de risco (baixo/médio/alto)
+    OcorrenciaCard.tsx               # card da lista
+    RiscoBadge.tsx                   # selo colorido de risco
   types/
-    ocorrencia.ts                 # Tipagem central (Ocorrencia, NivelRisco, StatusOcorrencia)
+    ocorrencia.ts                    # tipo Ocorrencia e tipos auxiliares
   data/
-    ocorrencias.ts                 # Mock usado só na primeira execução, para popular o storage
+    ocorrencias.ts                   # mock usado só na primeira execução
   services/
-    storage.ts                     # Único arquivo que fala diretamente com o AsyncStorage
-    ocorrenciaService.ts           # Regras de negócio: carregar e adicionar ocorrências
-App.tsx                             # Raiz do app — estado, navegação por tela e carga inicial
+    storage.ts                       # único arquivo que acessa o AsyncStorage
+    ocorrenciaService.ts             # carregar e adicionar ocorrências
 ```
 
-As telas **nunca** importam `AsyncStorage` diretamente — elas chamam funções
-de `services/ocorrenciaService.ts`, que por sua vez usa `services/storage.ts`.
-Isso mantém a tela livre de lógica de persistência.
+A navegação é feita com `useState` em `App.tsx` (telas `lista`, `cadastro` e `detalhe`), sem biblioteca de navegação.
 
 ---
 
-## Modelagem de dados
+## Tipo `Ocorrencia`
+
+Definido em `src/types/ocorrencia.ts`:
 
 ```ts
 export type NivelRisco = "baixo" | "medio" | "alto";
@@ -103,68 +116,32 @@ export type StatusOcorrencia = "aberta" | "em_andamento" | "resolvida";
 export type Ocorrencia = {
   id: number;
   descricao: string;
-  local: string;      // trecho da rodovia
+  local: string;        // trecho da rodovia
   risco: NivelRisco;
-  data: string;        // ISO string, gerada no momento do cadastro
+  data: string;         // ISO string, gerada ao salvar
   operador?: string;
   foto?: string;
   status?: StatusOcorrencia;
 };
 ```
 
+Onde é usado:
+
+- `App.tsx`: `useState<Ocorrencia[]>` guarda a lista em memória.
+- `services/ocorrenciaService.ts` e `services/storage.ts`: leem e gravam `Ocorrencia[]`.
+- `data/ocorrencias.ts`: o mock inicial é tipado como `Ocorrencia[]`.
+- `components/OcorrenciaCard.tsx`: recebe uma `Ocorrencia` por props.
+- `screens/DetalheOcorrenciaScreen.tsx`: recebe a `Ocorrencia` selecionada.
+- `screens/NovaOcorrenciaScreen.tsx`: monta os dados do formulário (`NovaOcorrenciaInput`, que é `Ocorrencia` sem `id` e `data`).
+
 ---
 
 ## Como os dados são persistidos
 
-A partir desta sprint o app usa **AsyncStorage**
-(`@react-native-async-storage/async-storage`) para gravar a lista completa de
-ocorrências como um JSON, sob a chave `@velora:ocorrencias`.
+Os dados são salvos no aparelho com **AsyncStorage**, como um JSON da lista inteira, sob a chave `@velora:ocorrencias`. Só `services/storage.ts` acessa o AsyncStorage; as telas chamam `ocorrenciaService`.
 
-Fluxo:
+- **Ao abrir o app:** `App.tsx` chama `carregarOcorrencias()` em um `useEffect`. Se já existe algo salvo, usa isso. Se é a primeira execução (nada salvo), usa o mock de `data/ocorrencias.ts` e já o grava no storage. Depois disso, o mock não é mais lido.
+- **Ao salvar uma ocorrência:** `adicionarOcorrencia()` gera o `id` (`Date.now()`) e a `data` (`new Date().toISOString()`), coloca a nova ocorrência no topo da lista e grava a lista atualizada no AsyncStorage. O estado da tela é atualizado em seguida.
+- **Ao reabrir o app:** o mesmo carregamento inicial lê o AsyncStorage, que já contém a ocorrência criada.
 
-1. **Abrir o app** → `App.tsx` chama `carregarOcorrencias()` (em
-   `ocorrenciaService.ts`) dentro de um `useEffect`.
-2. **Primeira execução** (nada salvo ainda) → o service usa o array mockado
-   de `data/ocorrencias.ts` como carga inicial **e já grava esse mock no
-   AsyncStorage**. Dali em diante, o mock nunca mais é lido — quem manda é o
-   storage.
-3. **Cadastrar uma ocorrência** → `NovaOcorrenciaScreen` chama `onSalvar`,
-   que aciona `adicionarOcorrencia()`: gera `id` (`Date.now()`) e `data`
-   (`new Date().toISOString()`), insere a nova ocorrência no topo da lista e
-   grava a lista inteira de volta no AsyncStorage.
-4. **Reabrir o app** → o mesmo `useEffect` do passo 1 lê o AsyncStorage, que
-   já contém a ocorrência cadastrada — os dados sobrevivem ao fechar/reabrir.
-
----
-
-## Fluxo do app
-
-1. **Lista**: tela inicial, mostra um spinner enquanto carrega do
-   AsyncStorage; depois exibe os cards com trecho, descrição, data e badge de
-   risco.
-2. **Cadastro**: toque em "+ Nova" abre o formulário; ao salvar, a ocorrência
-   é persistida e o app volta para a lista, já atualizada, sem recarregar o
-   app inteiro.
-3. **Detalhe**: toque em qualquer card abre a tela de detalhe completo
-   (descrição, data/hora, operador, status, risco).
-4. **Reabrir o app**: feche o app completamente e abra de novo — a lista
-   aparece exatamente como estava, incluindo qualquer ocorrência cadastrada
-   na sessão anterior.
-
----
-
-## Navegação
-
-A navegação continua feita por `useState` (tela `"lista" | "cadastro" |
-"detalhe"` em `App.tsx`), sem biblioteca externa — conforme permitido pelo
-enunciado da sprint.
-
----
-
-## Tecnologias
-
-- React Native + Expo SDK 51
-- TypeScript
-- `@react-native-async-storage/async-storage` para persistência local
-- `useState` / `useEffect` para estado e carga inicial
-- Navegação condicional por estado (sem biblioteca externa)
+Para voltar ao estado inicial (3 ocorrências de exemplo), limpe os dados do app no aparelho ou, no navegador, os dados do site (Local Storage).

@@ -16,6 +16,7 @@ App mobile feito em **React Native + Expo + TypeScript** para registrar, consult
 ## Links
 
 - **Repositório:** https://github.com/dudaaquila/sprint01-crossplataform
+- **O que é o projeto? (YouTube, não listado):** https://youtu.be/LtApg3yWTog?si=rkpy0TYz69LKVGkU
 - **Vídeo de demonstração (YouTube, não listado):** https://youtu.be/vOH6dmaZ598
 
 ---
